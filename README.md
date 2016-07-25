@@ -3,7 +3,63 @@ Symfony bundle for creating and storing encoded cookies
 ================================================================
 
 Instalation:
-	Todo
+	
+	1. Add to composer.json
+	
+	```
+	{
+		"repositories": [
+			{
+			  "type": "vcs",
+			  "url": "https://github.com/KMTests/CookieEncoder.git"
+			},
+		],
+		"require": [
+			"KMTests/CookieEncoder": "dev-master",
+		] 
+	}
+	```
+	
+	2. Register bundle to AppKernel
+	
+	```
+		public function registerBundles()
+		{
+			$bundles = [
+				...
+				new KMTests\CookieEncryptionBundle\KMTestsCookieEncryptionBundle(),
+			];
+		}
+	```
+	
+	3. Create cookie data provider
+	
+	```
+		use KMTests\CookieEncryptionBundle\Interfaces\CookieDataProviderInterface;
+
+		class Provider implements CookieDataProviderInterface
+		{
+			public function getData(array $arguments) {
+				$data = [...];
+				return $data;
+			}
+		}
+	```
+	
+	4. Reqister data provider as service
+	
+	```
+		services:
+			your.service.name:
+				class: YourBundle\Services\Provider
+	```
+	
+	5. Add minimal config to config.yml
+	
+	```
+		km_tests_cookie_encryption:
+			cookie_data_provider_service: 'your.service.name' // data provider service name
+	```
 	
 Usage in controller:
 	

@@ -1,5 +1,5 @@
 {
-    "name": "phoenix/wiremocks",
+    "name": "KMTests/CookieEncoder",
     "license": "Ms-RSL",
     "type": "project",
     "description": "Symfony extension for creating and storing encryped cookies",
