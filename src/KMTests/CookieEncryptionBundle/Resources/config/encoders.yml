@@ -1,0 +1,4 @@
+services:
+    ssl_encoder.service:
+        class: KMTests\CookieEncryptionBundle\Encoders\SSLEncoder
+        arguments: ['@test_config.provider']

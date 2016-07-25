@@ -1,0 +1,41 @@
+services:
+    annotation_reader.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\AnnotationReaderFactory
+
+    cookie_model.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\CookieModelFactory
+
+    cookie_repository.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\CookieRepositoryFactory
+        arguments: ['@encryped_cookie.jar', '@cookie_encoder.service']
+
+    date_interval.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\DateIntervalFactory
+
+    date_time.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\DateTimeFactory
+
+    reflection_method.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\ReflectionMethodFactory
+
+    symfony_cookie.factory:
+        class: KMTests\CookieEncryptionBundle\Factories\SymfonyCookieFactory
+
+    encryped_cookie.jar:
+        class: KMTests\CookieEncryptionBundle\EncryptedCookie\EncryptedCookieJar
+
+    cookie_encryption_manager.service:
+         class: KMTests\CookieEncryptionBundle\EncryptedCookie\CookieEncryptionManager
+         arguments: ['@request_stack','@encryped_cookie.jar','@cookie_repository.factory','@cookie_data_provider.service','@cookie_model.factory','@date_time.factory','@date_interval.factory','@test_config.provider']
+
+    encryped_cookie.annotation.listener:
+        class: KMTests\CookieEncryptionBundle\EventListeners\CookieAnnotationListener
+        arguments: ['@cookie_encryption_manager.service','@annotation_reader.factory','@reflection_method.factory','@test_config.provider']
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    app.cors_listener:
+         class: KMTests\CookieEncryptionBundle\EventListeners\CookieStorageListener
+         arguments: ['@encryped_cookie.jar', '@symfony_cookie.factory', '@test_config.provider']
+         tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
