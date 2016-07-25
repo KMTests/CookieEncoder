@@ -95,10 +95,10 @@ Usage in controller:
 	or just inject 'cookie_encryption_manager.service' and use getRepository() to get CookieRepository.
 	
 Todos:
-	Write tests
-	Write documentation for configuration
-	Write documentation for advanced use
-	Write service documentations
-	Example on how to use it with AuthGuard
-	Example on how to write DataProviders
+	Write tests__
+	Write documentation for configuration__
+	Write documentation for advanced use__
+	Write service documentations__
+	Example on how to use it with AuthGuard__
+	Example on how to write DataProviders__
 	
